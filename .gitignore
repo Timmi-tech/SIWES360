@@ -1,0 +1,46 @@
+# Build outputs
+**/bin/
+**/obj/
+
+# VS/SDK artifacts
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# Logs and caches
+*.log
+TestResults/
+*.cache
+
+# NuGet
+**/packages/
+**/project.assets.json
+**/project.nuget.cache
+**/*.nuget.g.props
+**/*.nuget.g.targets
+**/*.nuget.dgspec.json
+
+# IDEs
+.vs/
+.idea/
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Environment
+.env
+.env.*

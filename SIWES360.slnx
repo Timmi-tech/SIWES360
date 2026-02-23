@@ -1,0 +1,11 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="SIWES360.API/SIWES360.API.csproj" />
+  <Project Path="SIWES360.Application/SIWES360.Application.csproj" />
+  <Project Path="SIWES360.Domain/SIWES360.Domain.csproj" />
+  <Project Path="SIWES360.Infrastructure/SIWES360.Infrastructure.csproj" />
+</Solution>

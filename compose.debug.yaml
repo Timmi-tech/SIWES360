@@ -1,0 +1,16 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+
+services:
+  siwes360api:
+    image: siwes360api
+    build:
+      context: .
+      dockerfile: SIWES360.API/Dockerfile
+      args:
+        - configuration=Debug
+    ports:
+      - 5229:5229
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
