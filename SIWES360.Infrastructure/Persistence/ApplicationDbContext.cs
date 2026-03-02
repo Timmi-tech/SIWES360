@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SIWES360.Application.Common.Interfaces;
+using SIWES360.Domain.Entities.Departments;
 using SIWES360.Domain.Entities.User;
 
 namespace SIWES360.Infrastructure.Persistence
@@ -15,6 +16,7 @@ namespace SIWES360.Infrastructure.Persistence
             : base(options)
         {
         }
+        public DbSet<Department> Departments { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

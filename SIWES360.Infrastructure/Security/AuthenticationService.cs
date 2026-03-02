@@ -1,0 +1,193 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using SIWES360.Application.Common.Interfaces;
+using SIWES360.Application.Common.Models;
+using SIWES360.Application.Features.Authentication;
+using SIWES360.Domain.Entities.User;
+using SIWES360.Domain.Enums;
+using Serilog;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
+
+namespace SIWES360.Infrastructure.Security
+{
+    public sealed class AuthenticationService : IAuthenticationService
+    {
+        private readonly UserManager<User> _userManager;
+        private readonly IOptions<JwtConfiguration> _configuration;
+        private readonly JwtConfiguration _jwtConfiguration;
+        private readonly IApplicationDbContext _context;
+
+        public AuthenticationService(UserManager<User> userManager, IOptions<JwtConfiguration> configuration, IApplicationDbContext context)
+        {
+            _userManager = userManager;
+            _configuration = configuration;
+            _jwtConfiguration = _configuration.Value;
+            _context = context;
+        }
+        public async Task<Result> RegisterUserAsync(string firstname, string lastname, string matricNo, string email, string password, UserRole role, Guid departmentId, CancellationToken ct)
+        {
+            var dept = await _context.Departments.AsNoTracking().FirstOrDefaultAsync(d => d.Id == departmentId, cancellationToken: ct);
+
+            if (dept is null)
+            {
+                Log.Warning("Registration attempt failed: Department with ID {DepartmentId} not found.", departmentId);
+                return Result.Failure(Error.NotFound("Department", departmentId.ToString()));
+            }
+
+            var exists = await _userManager.Users.AnyAsync(u => u.MatricNumber == matricNo, cancellationToken: ct);
+            if (exists)
+            {
+                Log.Warning("Registration attempt failed: User with Matric Number {MatricNo} already exists.", matricNo);
+                return Result.Failure(Error.Validation("DuplicateMatricNumber", $"A user with Matric Number {matricNo} already exists."));
+            }
+
+            User user = new()
+            {
+                FirstName = firstname,
+                LastName = lastname,
+                MatricNumber = matricNo,
+                Email = email,
+                Role = UserRole.Student,
+                DepartmentId = departmentId,
+            };
+            var identityResult = await _userManager.CreateAsync(user, password);
+
+            return identityResult.Succeeded
+                ? Result.Success()
+                : Result.Failure(Error.Validation("UserCreationFailed", string.Join(", ", identityResult.Errors.Select(e => e.Description))));
+        }
+        public async Task<Result<TokenResponse>> LoginAsync(string identifier, string password, CancellationToken ct)
+        {
+
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.MatricNumber == identifier, ct);
+            if (user == null)
+            {
+                Log.Warning("Login attempt failed: User with identifier {Identifier} not found.", identifier);
+                return Result<TokenResponse>.Failure(Error.NotFound("User", identifier));
+            }
+            if (!await _userManager.CheckPasswordAsync(user, password))
+            {
+                Log.Warning("Login attempt failed: Incorrect password for user with identifier {Identifier}.", identifier);
+                return Result<TokenResponse>.Failure(Error.Validation("InvalidCredentials", "Invalid email or password."));
+            }
+            return await CreateTokenAsync(user, populateExp: true);
+        }
+        private async Task<Result<TokenResponse>> CreateTokenAsync(User user, bool populateExp)
+        {
+            var signingCredentials = GetSigningCredentials();
+            var claims = await GetClaims(user);
+            var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
+
+            string refreshToken = GenerateRefreshToken();
+
+            user.RefreshToken = HashRefreshToken(refreshToken);
+
+            if (populateExp)
+                user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+
+            await _userManager.UpdateAsync(user);
+
+            string accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+
+            var response = new TokenResponse(accessToken, refreshToken);
+
+            return Result<TokenResponse>.Success(response);
+        }
+        private SigningCredentials GetSigningCredentials()
+        {
+            byte[] key = Encoding.UTF8.GetBytes(_jwtConfiguration.Secret);
+            SymmetricSecurityKey secret = new(key);
+            return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
+        }
+        private static Task<List<Claim>> GetClaims(User user)
+        {
+            List<Claim> claims =
+            [
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Name, user.UserName!),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim("departmentId", user.DepartmentId?.ToString() ?? ""),
+            ];
+            return Task.FromResult(claims);
+        }
+        private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
+        {
+            JwtSecurityToken tokenOptions = new(
+                issuer: _jwtConfiguration.ValidIssuer,
+                audience: _jwtConfiguration.ValidAudience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(_jwtConfiguration.ExpiresMinutes)),
+                signingCredentials: signingCredentials
+            );
+            return tokenOptions;
+        }
+        private static string GenerateRefreshToken()
+        {
+            byte[] randomNumber = new byte[32];
+            using RandomNumberGenerator rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+        }
+        private static string HashRefreshToken(string refreshToken)
+        {
+            byte[] tokenBytes = Encoding.UTF8.GetBytes(refreshToken);
+            byte[] hashBytes = SHA256.HashData(tokenBytes);
+            return Convert.ToBase64String(hashBytes);
+        }
+        private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        {
+            TokenValidationParameters tokenValidationParameters = new()
+            {
+                ValidateAudience = true,
+                ValidateIssuer = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfiguration.Secret!)),
+                ValidateLifetime = false,
+                ValidIssuer = _jwtConfiguration.ValidIssuer,
+                ValidAudience = _jwtConfiguration.ValidAudience,
+                ClockSkew = TimeSpan.FromMinutes(5)
+            };
+
+            JwtSecurityTokenHandler tokenHandler = new();
+            ClaimsPrincipal principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+
+            if (securityToken is not JwtSecurityToken jwtSecurityToken ||
+            !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new SecurityTokenException("Invalid token Format");
+            }
+            return principal;
+        }
+        public async Task<Result<TokenResponse>> RefreshTokenAsync(string accessToken, string refreshToken, CancellationToken ct)
+        {
+            ClaimsPrincipal principal = GetPrincipalFromExpiredToken(accessToken);
+            string? username = principal.Identity?.Name;
+            if (string.IsNullOrEmpty(username))
+                return Result<TokenResponse>.Failure(Error.Validation("InvalidToken", "Invalid token - username not found"));
+
+            User? user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+                return Result<TokenResponse>.Failure(Error.NotFound("User", username));
+
+            string refreshTokenHash = HashRefreshToken(refreshToken);
+            if (user.RefreshToken != refreshTokenHash)
+            {
+                Log.Warning($"Invalid refresh token attempt for user: {username}");
+                return Result<TokenResponse>.Failure(Error.Validation("InvalidRefreshToken", "Invalid refresh token"));
+            }
+
+            if (user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+            {
+                Log.Warning($"Expired refresh token attempt for user: {username}");
+                return Result<TokenResponse>.Failure(Error.Validation("ExpiredRefreshToken", "Refresh token expired"));
+            }
+
+            return await CreateTokenAsync(user, populateExp: true);
+        }
+    }
+}
