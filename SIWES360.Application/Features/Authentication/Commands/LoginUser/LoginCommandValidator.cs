@@ -7,7 +7,7 @@ namespace SIWES360.Application.Features.Authentication.Commands
     {
         public LoginCommandValidator()
         {
-            RuleFor(x => x.Email).NotEmpty().EmailAddress();
+            RuleFor(x => x.identifier).NotEmpty();
             RuleFor(x => x.Password).NotEmpty();
         }
     }

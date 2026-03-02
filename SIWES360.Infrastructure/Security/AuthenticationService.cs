@@ -52,19 +52,22 @@ namespace SIWES360.Infrastructure.Security
                 LastName = lastname,
                 MatricNumber = matricNo,
                 Email = email,
+                UserName = email,
                 Role = UserRole.Student,
                 DepartmentId = departmentId,
             };
             var identityResult = await _userManager.CreateAsync(user, password);
 
             return identityResult.Succeeded
-                ? Result.Success()
+                ? Result.Success("Registration successful! Your account has been created.")
                 : Result.Failure(Error.Validation("UserCreationFailed", string.Join(", ", identityResult.Errors.Select(e => e.Description))));
         }
         public async Task<Result<TokenResponse>> LoginAsync(string identifier, string password, CancellationToken ct)
         {
 
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.MatricNumber == identifier, ct);
+            user ??= await _userManager.FindByEmailAsync(identifier);
+            user ??= await _userManager.FindByNameAsync(identifier);
             if (user == null)
             {
                 Log.Warning("Login attempt failed: User with identifier {Identifier} not found.", identifier);
@@ -166,28 +169,41 @@ namespace SIWES360.Infrastructure.Security
         public async Task<Result<TokenResponse>> RefreshTokenAsync(string accessToken, string refreshToken, CancellationToken ct)
         {
             ClaimsPrincipal principal = GetPrincipalFromExpiredToken(accessToken);
-            string? username = principal.Identity?.Name;
-            if (string.IsNullOrEmpty(username))
-                return Result<TokenResponse>.Failure(Error.Validation("InvalidToken", "Invalid token - username not found"));
+            string? userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
+                return Result<TokenResponse>.Failure(Error.Validation("InvalidToken", "Invalid token - user ID not found"));
 
-            User? user = await _userManager.FindByNameAsync(username);
+            User? user = await _userManager.FindByIdAsync(userId);
             if (user == null)
-                return Result<TokenResponse>.Failure(Error.NotFound("User", username));
+                return Result<TokenResponse>.Failure(Error.NotFound("User", userId));
 
             string refreshTokenHash = HashRefreshToken(refreshToken);
             if (user.RefreshToken != refreshTokenHash)
             {
-                Log.Warning($"Invalid refresh token attempt for user: {username}");
+                Log.Warning($"Invalid refresh token attempt for user: {userId}");
                 return Result<TokenResponse>.Failure(Error.Validation("InvalidRefreshToken", "Invalid refresh token"));
             }
 
             if (user.RefreshTokenExpiryTime <= DateTime.UtcNow)
             {
-                Log.Warning($"Expired refresh token attempt for user: {username}");
+                Log.Warning($"Expired refresh token attempt for user: {userId}");
                 return Result<TokenResponse>.Failure(Error.Validation("ExpiredRefreshToken", "Refresh token expired"));
             }
-
             return await CreateTokenAsync(user, populateExp: true);
         }
+        public async Task<Result> RevokeAsync(string userId, CancellationToken ct)
+        {
+            User? user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return Result.Failure(Error.NotFound("User", userId));
+
+            user.RefreshToken = null!;
+            user.RefreshTokenExpiryTime = null;
+            await _userManager.UpdateAsync(user);
+
+            return Result.Success("Refresh token revoked successfully");
+        }
+
+
     }
 }

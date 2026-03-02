@@ -25,5 +25,9 @@ namespace SIWES360.Application.Common.Interfaces
            string accessToken,
            string refreshToken,
            CancellationToken ct);
+        Task<Result> RevokeAsync(
+            string userId, 
+            CancellationToken ct);
+
     }
 }

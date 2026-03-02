@@ -3,6 +3,7 @@ using Serilog;
 using SIWES360.Application;
 using SIWES360.Infrastructure;
 using SIWES360.Infrastructure.Persistence;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ builder.Host.UseSerilog((context, services, configuration) =>
 builder.Services.AddOpenApi();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddControllers();  
+
 
 
 var app = builder.Build();
@@ -29,9 +32,21 @@ await AppDbSeeder.SeedAsync(app.Services);
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    app.MapScalarApiReference(options =>
+ {
+     options
+         .WithTitle("SIWES360 API Docs")
+         .WithTheme(ScalarTheme.Mars);
+ });
+
 }
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();
+
