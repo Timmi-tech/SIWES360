@@ -26,8 +26,20 @@ namespace SIWES360.Application.Common.Interfaces
            string refreshToken,
            CancellationToken ct);
         Task<Result> RevokeAsync(
-            string userId, 
+            string userId,
             CancellationToken ct);
 
+        Task<Result> InviteSupervisorAsync(
+           string email,
+           string fullName,
+           Guid departmentId,
+           CancellationToken ct);
+
+
+        Task<Result> SetInvitedSupervisorPasswordAsync(
+            string UserId,
+            string Token,       
+            string NewPassword,
+            CancellationToken ct);
     }
 }

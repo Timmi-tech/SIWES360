@@ -20,6 +20,7 @@ public class EmailSender(IOptions<EmailConfiguration> config) : IEmailSender
         message.To.Add(MailboxAddress.Parse(email));
         message.Subject = subject;
 
+
         message.Body = new BodyBuilder { HtmlBody = htmlMessage }.ToMessageBody();
 
         using var client = new SmtpClient();
@@ -29,8 +30,7 @@ public class EmailSender(IOptions<EmailConfiguration> config) : IEmailSender
             await client.ConnectAsync(
                 _config.SmtpServer,
                 _config.SmtpPort,
-                SecureSocketOptions.StartTls);
-
+                SecureSocketOptions.SslOnConnect);
             await client.AuthenticateAsync(
                 _config.FromEmail,
                 _config.SmtpPassword);

@@ -26,6 +26,7 @@ namespace SIWES360.Infrastructure
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddHttpContextAccessor();
 
             services.AddCors(options =>

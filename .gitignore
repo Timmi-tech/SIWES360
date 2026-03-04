@@ -44,3 +44,7 @@ Desktop.ini
 # Environment
 .env
 .env.*
+
+# App settings
+appsettings.json
+appsettings.Development.json

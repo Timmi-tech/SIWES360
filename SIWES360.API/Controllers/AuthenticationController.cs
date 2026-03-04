@@ -2,9 +2,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SIWES360.Application.Features.Authentication.Commands;
+using SIWES360.Application.Features.Authentication.Commands.InviteSupervisor;
 using SIWES360.Application.Features.Authentication.Commands.LoginUser;
 using SIWES360.Application.Features.Authentication.Commands.RefreshToken;
 using SIWES360.Application.Features.Authentication.Commands.RevokeToken;
+using SIWES360.Application.Features.Authentication.Commands.SetInvitedSupervisorPassword;
 
 namespace SIWES360.API.Controllers
 {
@@ -33,7 +35,6 @@ namespace SIWES360.API.Controllers
             var result = await _mediator.Send(command, ct);
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
         }
-
         [Authorize]
         [HttpPost("revoke")]
         public async Task<IActionResult> Revoke(CancellationToken ct)
@@ -41,5 +42,18 @@ namespace SIWES360.API.Controllers
             var result = await _mediator.Send(new RevokeTokenCommand(), ct);
             return result.IsSuccess ? Ok("Logged out successfully") : BadRequest(result.Error);
         }
+        [HttpPost("invite-supervisor")]
+        public async Task<IActionResult> InviteSupervisor(InviteSupervisorCommand command, CancellationToken ct)
+        {
+            var result = await _mediator.Send(command, ct);
+            return result.IsSuccess ? Ok(result.Message) : BadRequest(result.Error);
+        }
+        [HttpPost("set-password")]
+        public async Task<IActionResult> SetPassword(SetInvitedSupervisorPasswordCommand command, CancellationToken ct)
+        {
+            var result = await _mediator.Send(command, ct);
+            return result.IsSuccess ? Ok(result.Message) : BadRequest(result.Error);
+        }
+
     }
 }

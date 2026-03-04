@@ -12,6 +12,8 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
 
 namespace SIWES360.Infrastructure.Security
 {
@@ -21,13 +23,17 @@ namespace SIWES360.Infrastructure.Security
         private readonly IOptions<JwtConfiguration> _configuration;
         private readonly JwtConfiguration _jwtConfiguration;
         private readonly IApplicationDbContext _context;
+        private readonly IEmailService _emailService;
+        private readonly IConfiguration _config;
 
-        public AuthenticationService(UserManager<User> userManager, IOptions<JwtConfiguration> configuration, IApplicationDbContext context)
+        public AuthenticationService(UserManager<User> userManager, IOptions<JwtConfiguration> configuration, IApplicationDbContext context, IEmailService emailService, IConfiguration config)
         {
             _userManager = userManager;
             _configuration = configuration;
             _jwtConfiguration = _configuration.Value;
             _context = context;
+            _emailService = emailService;
+            _config = config;
         }
         public async Task<Result> RegisterUserAsync(string firstname, string lastname, string matricNo, string email, string password, UserRole role, Guid departmentId, CancellationToken ct)
         {
@@ -216,6 +222,74 @@ namespace SIWES360.Infrastructure.Security
             return Result.Success("Refresh token revoked successfully");
         }
 
+        public async Task<Result> InviteSupervisorAsync(string email, string fullName, Guid departmentId, CancellationToken ct)
+        {
+            email = email.Trim().ToLowerInvariant();
 
+            var existing = await _userManager.FindByEmailAsync(email);
+            if (existing != null)
+                return Result.Failure(Error.Conflict("A user with this email already exists."));
+
+            var dept = await _context.Departments.AsNoTracking().FirstOrDefaultAsync(d => d.Id == departmentId, ct);
+            if (dept is null)
+                return Result.Failure(Error.NotFound("Department", departmentId.ToString()));
+
+            var parts = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var firstName = parts.FirstOrDefault() ?? "Supervisor";
+            var lastName = parts.Length > 1 ? string.Join(' ', parts.Skip(1)) : "";
+
+            var user = new User
+            {
+                Email = email,
+                UserName = email,
+                FirstName = firstName,
+                LastName = lastName,
+                Role = UserRole.Supervisor,
+                DepartmentId = departmentId,
+                EmailConfirmed = false
+            };
+            var createResult = await _userManager.CreateAsync(user);
+            if (!createResult.Succeeded)
+            {
+                var msg = string.Join(", ", createResult.Errors.Select(e => e.Description));
+                return Result.Failure(Error.Validation("UserCreationFailed", msg));
+            }
+            var rawToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(rawToken));
+            var frontendBaseUrl = _config["Frontend:BaseUrl"] ?? "http://localhost:3000";
+            var link = $"{frontendBaseUrl}/set-password?userId={user.Id}&token={encodedToken}";
+
+            await _emailService.SendInviteSupervisorEmailAsync(email, fullName, link, ct);
+
+            return Result.Success("Supervisor invited successfully.");
+        }
+        public async Task<Result> SetInvitedSupervisorPasswordAsync(string UserId, string Token, string NewPassword, CancellationToken ct)
+        {
+            var user = await _userManager.FindByIdAsync(UserId);
+            if (user is null)
+                return Result.Failure(Error.NotFound("User", UserId));
+
+            string decodedToken;
+            try
+            {
+                var bytes = WebEncoders.Base64UrlDecode(Token);
+                decodedToken = Encoding.UTF8.GetString(bytes);
+            }
+            catch
+            {
+                return Result.Failure(Error.Validation("InvalidToken", "Invalid or malformed token."));
+            }
+
+            var resetResult = await _userManager.ResetPasswordAsync(user, decodedToken, NewPassword);
+            if (!resetResult.Succeeded)
+            {
+                var msg = string.Join(", ", resetResult.Errors.Select(e => e.Description));
+                return Result.Failure(Error.Validation("PasswordSetFailed", msg));
+            }
+            user.EmailConfirmed = true;
+            await _userManager.UpdateAsync(user);
+
+            return Result.Success("Password set successfully.");
+        }
     }
 }
