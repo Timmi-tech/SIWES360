@@ -24,8 +24,8 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
-
-
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -35,19 +35,27 @@ await AppDbSeeder.SeedAsync(app.Services);
 
 app.MapOpenApi();
 
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "SIWES360 API v1");
+    c.RoutePrefix = "swagger"; // /swagger
+});
+
 app.MapScalarApiReference(options =>
 {
- options
-     .WithTitle("SIWES360 API Docs")
-     .WithTheme(ScalarTheme.Mars);
+    options
+        .WithTitle("SIWES360 API Docs")
+        .WithTheme(ScalarTheme.Mars);
 });
-app.UseHttpsRedirection();
 
+app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
 
 app.Run();
 
