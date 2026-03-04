@@ -4,6 +4,8 @@ using SIWES360.Application;
 using SIWES360.Infrastructure;
 using SIWES360.Infrastructure.Persistence;
 using Scalar.AspNetCore;
+using SIWES360.Application.Common.Interfaces;
+using SIWES360.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();  
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 
 

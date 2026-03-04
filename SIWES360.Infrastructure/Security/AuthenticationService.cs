@@ -39,13 +39,12 @@ namespace SIWES360.Infrastructure.Security
                 return Result.Failure(Error.NotFound("Department", departmentId.ToString()));
             }
 
-            var exists = await _userManager.Users.AnyAsync(u => u.MatricNumber == matricNo, cancellationToken: ct);
+            var exists = await _userManager.Users.AnyAsync(u => u.MatricNumber == matricNo || u.Email == email, cancellationToken: ct);
             if (exists)
             {
-                Log.Warning("Registration attempt failed: User with Matric Number {MatricNo} already exists.", matricNo);
-                return Result.Failure(Error.Validation("DuplicateMatricNumber", $"A user with Matric Number {matricNo} already exists."));
+                Log.Warning("Registration attempt failed: User with Matric Number {MatricNo} or Email {Email} already exists.", matricNo, email);
+                return Result.Failure(Error.Validation("DuplicateUser", "A user with this Matric Number or Email already exists."));
             }
-
             User user = new()
             {
                 FirstName = firstname,
@@ -65,9 +64,7 @@ namespace SIWES360.Infrastructure.Security
         public async Task<Result<TokenResponse>> LoginAsync(string identifier, string password, CancellationToken ct)
         {
 
-            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.MatricNumber == identifier, ct);
-            user ??= await _userManager.FindByEmailAsync(identifier);
-            user ??= await _userManager.FindByNameAsync(identifier);
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.MatricNumber == identifier || u.Email == identifier || u.UserName == identifier, ct);
             if (user == null)
             {
                 Log.Warning("Login attempt failed: User with identifier {Identifier} not found.", identifier);
@@ -107,16 +104,30 @@ namespace SIWES360.Infrastructure.Security
             SymmetricSecurityKey secret = new(key);
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
-        private static Task<List<Claim>> GetClaims(User user)
+        private async Task<List<Claim>> GetClaims(User user)
         {
-            List<Claim> claims =
-            [
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName!),
-                new Claim(ClaimTypes.Role, user.Role.ToString()),
-                new Claim("departmentId", user.DepartmentId?.ToString() ?? ""),
-            ];
-            return Task.FromResult(claims);
+            var claims = new List<Claim>
+    {
+        new(ClaimTypes.NameIdentifier, user.Id),
+        new(ClaimTypes.Name, user.UserName ?? string.Empty),
+        new(ClaimTypes.Role, user.Role.ToString()),
+    };
+
+            if (user.DepartmentId is Guid deptId)
+            {
+                var deptName = await _context.Departments
+                    .AsNoTracking()
+                    .Where(d => d.Id == deptId)
+                    .Select(d => d.Name)
+                    .FirstOrDefaultAsync();
+
+                if (!string.IsNullOrEmpty(deptName))
+                {
+                    claims.Add(new("departmentId", deptId.ToString()));
+                    claims.Add(new("departmentName", deptName));
+                }
+            }
+            return claims;
         }
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
         {
@@ -184,11 +195,12 @@ namespace SIWES360.Infrastructure.Security
                 return Result<TokenResponse>.Failure(Error.Validation("InvalidRefreshToken", "Invalid refresh token"));
             }
 
-            if (user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+            if (user.RefreshTokenExpiryTime == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
             {
-                Log.Warning($"Expired refresh token attempt for user: {userId}");
+                Log.Warning("Expired refresh token attempt for user: {UserId}", userId);
                 return Result<TokenResponse>.Failure(Error.Validation("ExpiredRefreshToken", "Refresh token expired"));
             }
+
             return await CreateTokenAsync(user, populateExp: true);
         }
         public async Task<Result> RevokeAsync(string userId, CancellationToken ct)

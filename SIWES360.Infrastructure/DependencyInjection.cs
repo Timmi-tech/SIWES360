@@ -9,6 +9,8 @@ using SIWES360.Infrastructure.Persistence;
 using SIWES360.Infrastructure.Security;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using SIWES360.Infrastructure.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace SIWES360.Infrastructure
 {
@@ -23,14 +25,16 @@ namespace SIWES360.Infrastructure
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddHttpContextAccessor();
 
             services.AddIdentity<User, IdentityRole>(options =>
             {
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
                 options.User.RequireUniqueEmail = true;
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -40,9 +44,6 @@ namespace SIWES360.Infrastructure
 
             var jwt = configuration.GetSection(JwtConfiguration.Section).Get<JwtConfiguration>()
                   ?? throw new InvalidOperationException("JwtSettings missing");
-
-            if (string.IsNullOrWhiteSpace(jwt.Secret))
-                throw new InvalidOperationException("JwtSettings:Secret is missing");
 
             if (string.IsNullOrWhiteSpace(jwt.Secret))
                 throw new InvalidOperationException("JwtSettings:Secret is missing");
@@ -67,7 +68,8 @@ namespace SIWES360.Infrastructure
                 };
             });
 
-            services.Configure<JwtConfiguration>(configuration.GetSection("JwtSettings"));
+            services.Configure<EmailConfiguration>(configuration.GetSection(EmailConfiguration.Section));
+
 
             return services;
         }

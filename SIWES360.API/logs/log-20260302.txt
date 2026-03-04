@@ -1138,3 +1138,307 @@ SELECT EXISTS (
 2026-03-02 11:30:25.196 +01:00 [INF] Hosting environment: Development
 2026-03-02 11:30:25.197 +01:00 [INF] Content root path: C:\Users\user\Desktop\dev\c##\SIWES360\siwes360.api
 2026-03-02 11:41:15.712 +01:00 [INF] Application is shutting down...
+2026-03-02 11:53:45.275 +01:00 [INF] User profile is available. Using 'C:\Users\user\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-02 11:53:47.125 +01:00 [INF] Executed DbCommand (112ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-02 11:53:47.182 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 11:53:47.286 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-02 11:53:47.368 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-02 11:53:47.374 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 11:53:47.397 +01:00 [INF] No migrations were applied. The database is already up to date.
+2026-03-02 11:53:47.827 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Departments" AS d)
+2026-03-02 11:53:48.099 +01:00 [INF] Now listening on: http://localhost:5229
+2026-03-02 11:53:48.103 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-02 11:53:48.106 +01:00 [INF] Hosting environment: Development
+2026-03-02 11:53:48.107 +01:00 [INF] Content root path: C:\Users\user\Desktop\dev\c##\SIWES360\siwes360.api
+2026-03-02 11:54:02.111 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5229/scalar/ - null null
+2026-03-02 11:54:02.139 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-03-02 11:54:02.185 +01:00 [INF] Executing endpoint 'HTTP: GET /scalar/{documentName?}'
+2026-03-02 11:54:02.307 +01:00 [INF] Write content with HTTP Response ContentType of text/html
+2026-03-02 11:54:02.315 +01:00 [INF] Executed endpoint 'HTTP: GET /scalar/{documentName?}'
+2026-03-02 11:54:02.320 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5229/scalar/ - 200 634 text/html 211.4568ms
+2026-03-02 11:54:02.413 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5229/scalar/scalar.aspnetcore.js - null null
+2026-03-02 11:54:02.413 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5229/scalar/scalar.js - null null
+2026-03-02 11:54:02.430 +01:00 [INF] Executing endpoint 'HTTP: GET /scalar/scalar.aspnetcore.js'
+2026-03-02 11:54:02.436 +01:00 [INF] Executing endpoint 'HTTP: GET /scalar/scalar.js'
+2026-03-02 11:54:02.443 +01:00 [INF] Sending file with download name ''.
+2026-03-02 11:54:02.443 +01:00 [INF] Sending file with download name ''.
+2026-03-02 11:54:02.451 +01:00 [INF] Executed endpoint 'HTTP: GET /scalar/scalar.aspnetcore.js'
+2026-03-02 11:54:02.454 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5229/scalar/scalar.aspnetcore.js - 200 1111 text/javascript 40.3053ms
+2026-03-02 11:54:02.496 +01:00 [INF] Executed endpoint 'HTTP: GET /scalar/scalar.js'
+2026-03-02 11:54:02.501 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5229/scalar/scalar.js - 200 991987 text/javascript 87.1227ms
+2026-03-02 11:54:03.142 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5229/openapi/v1.json - null null
+2026-03-02 11:54:03.147 +01:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-03-02 11:54:03.307 +01:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-03-02 11:54:03.309 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5229/openapi/v1.json - 200 null application/json;charset=utf-8 167.5086ms
+2026-03-02 11:54:03.854 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5229/scalar/favicon.svg - null null
+2026-03-02 11:54:03.860 +01:00 [INF] Executing endpoint 'HTTP: GET /scalar/favicon.svg'
+2026-03-02 11:54:03.863 +01:00 [INF] Sending file with download name ''.
+2026-03-02 11:54:03.866 +01:00 [INF] Executed endpoint 'HTTP: GET /scalar/favicon.svg'
+2026-03-02 11:54:03.872 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5229/scalar/favicon.svg - 200 533 image/svg+xml 18.0589ms
+2026-03-02 11:56:17.425 +01:00 [INF] Application is shutting down...
+2026-03-02 11:59:20.649 +01:00 [INF] User profile is available. Using 'C:\Users\user\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-02 11:59:23.097 +01:00 [INF] Executed DbCommand (66ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-02 11:59:23.136 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 11:59:23.221 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-02 11:59:23.293 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-02 11:59:23.298 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 11:59:23.319 +01:00 [INF] No migrations were applied. The database is already up to date.
+2026-03-02 11:59:23.583 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Departments" AS d)
+2026-03-02 11:59:23.837 +01:00 [INF] Now listening on: http://localhost:5229
+2026-03-02 11:59:23.841 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-02 11:59:23.847 +01:00 [INF] Hosting environment: Development
+2026-03-02 11:59:23.850 +01:00 [INF] Content root path: C:\Users\user\Desktop\dev\c##\SIWES360\siwes360.api
+2026-03-02 12:00:13.240 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5229/api/Authentication/login - application/json 57
+2026-03-02 12:00:13.270 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-03-02 12:00:13.328 +01:00 [INF] Executing endpoint 'SIWES360.API.Controllers.AuthenticationController.Login (SIWES360.API)'
+2026-03-02 12:00:13.361 +01:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(SIWES360.Application.Features.Authentication.Commands.LoginUser.LoginCommand, System.Threading.CancellationToken) on controller SIWES360.API.Controllers.AuthenticationController (SIWES360.API).
+2026-03-02 12:00:13.419 +01:00 [INF] Handling {"identifier":"200502042","Password":"08098011"} {"identifier":"200502042","Password":"08098011"}
+2026-03-02 12:00:13.575 +01:00 [INF] Executed DbCommand (17ms) [Parameters=[@__identifier_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DepartmentId", a."Email", a."EmailConfirmed", a."FirstName", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."MatricNumber", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RefreshToken", a."RefreshTokenExpiryTime", a."Role", a."SecurityStamp", a."TwoFactorEnabled", a."UpdatedAt", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."MatricNumber" = @__identifier_0
+LIMIT 1
+2026-03-02 12:00:13.773 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedUserName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DepartmentId", a."Email", a."EmailConfirmed", a."FirstName", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."MatricNumber", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RefreshToken", a."RefreshTokenExpiryTime", a."Role", a."SecurityStamp", a."TwoFactorEnabled", a."UpdatedAt", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."NormalizedUserName" = @__normalizedUserName_0
+LIMIT 1
+2026-03-02 12:00:13.794 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DepartmentId", a."Email", a."EmailConfirmed", a."FirstName", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."MatricNumber", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RefreshToken", a."RefreshTokenExpiryTime", a."Role", a."SecurityStamp", a."TwoFactorEnabled", a."UpdatedAt", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."NormalizedEmail" = @__normalizedEmail_0
+LIMIT 2
+2026-03-02 12:00:13.939 +01:00 [INF] Executed DbCommand (14ms) [Parameters=[@p23='?', @p0='?' (DbType = Int32), @p1='?', @p24='?', @p2='?' (DbType = DateTime), @p3='?' (DbType = Guid), @p4='?', @p5='?' (DbType = Boolean), @p6='?', @p7='?', @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?', @p11='?', @p12='?', @p13='?', @p14='?', @p15='?' (DbType = Boolean), @p16='?', @p17='?' (DbType = DateTime), @p18='?' (DbType = Int32), @p19='?', @p20='?' (DbType = Boolean), @p21='?' (DbType = DateTime), @p22='?'], CommandType='"Text"', CommandTimeout='30']
+UPDATE "AspNetUsers" SET "AccessFailedCount" = @p0, "ConcurrencyStamp" = @p1, "CreatedAt" = @p2, "DepartmentId" = @p3, "Email" = @p4, "EmailConfirmed" = @p5, "FirstName" = @p6, "LastName" = @p7, "LockoutEnabled" = @p8, "LockoutEnd" = @p9, "MatricNumber" = @p10, "NormalizedEmail" = @p11, "NormalizedUserName" = @p12, "PasswordHash" = @p13, "PhoneNumber" = @p14, "PhoneNumberConfirmed" = @p15, "RefreshToken" = @p16, "RefreshTokenExpiryTime" = @p17, "Role" = @p18, "SecurityStamp" = @p19, "TwoFactorEnabled" = @p20, "UpdatedAt" = @p21, "UserName" = @p22
+WHERE "Id" = @p23 AND "ConcurrencyStamp" = @p24;
+2026-03-02 12:00:13.982 +01:00 [WRN] Long Running Request: LoginCommand (553 ms)
+2026-03-02 12:00:13.986 +01:00 [INF] Handled LoginCommand
+2026-03-02 12:00:13.995 +01:00 [INF] Executing OkObjectResult, writing value of type 'SIWES360.Application.Features.Authentication.TokenResponse'.
+2026-03-02 12:00:14.009 +01:00 [INF] Executed action SIWES360.API.Controllers.AuthenticationController.Login (SIWES360.API) in 637.907ms
+2026-03-02 12:00:14.020 +01:00 [INF] Executed endpoint 'SIWES360.API.Controllers.AuthenticationController.Login (SIWES360.API)'
+2026-03-02 12:00:14.033 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5229/api/Authentication/login - 200 null application/json; charset=utf-8 793.9342ms
+2026-03-02 12:00:48.375 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5229/api/Authentication/revoke - application/json 0
+2026-03-02 12:00:48.387 +01:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-03-02 12:00:48.393 +01:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-03-02 12:00:48.396 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5229/api/Authentication/revoke - 401 0 null 20.758ms
+2026-03-02 12:01:04.049 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5229/api/Authentication/revoke - application/json 0
+2026-03-02 12:01:04.056 +01:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-03-02 12:01:04.057 +01:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-03-02 12:01:04.060 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5229/api/Authentication/revoke - 401 0 null 10.2058ms
+2026-03-02 12:01:42.315 +01:00 [INF] Application is shutting down...
+2026-03-02 12:01:48.492 +01:00 [INF] User profile is available. Using 'C:\Users\user\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-02 12:01:49.351 +01:00 [INF] Executed DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-02 12:01:49.377 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 12:01:49.437 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-02 12:01:49.485 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-02 12:01:49.490 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 12:01:49.505 +01:00 [INF] No migrations were applied. The database is already up to date.
+2026-03-02 12:01:49.668 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Departments" AS d)
+2026-03-02 12:01:49.781 +01:00 [INF] Now listening on: http://localhost:5229
+2026-03-02 12:01:49.785 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-02 12:01:49.786 +01:00 [INF] Hosting environment: Development
+2026-03-02 12:01:49.788 +01:00 [INF] Content root path: C:\Users\user\Desktop\dev\c##\SIWES360\siwes360.api
+2026-03-02 12:02:13.757 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5229/api/Authentication/login - application/json 57
+2026-03-02 12:02:13.786 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-03-02 12:02:13.825 +01:00 [INF] Executing endpoint 'SIWES360.API.Controllers.AuthenticationController.Login (SIWES360.API)'
+2026-03-02 12:02:13.915 +01:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(SIWES360.Application.Features.Authentication.Commands.LoginUser.LoginCommand, System.Threading.CancellationToken) on controller SIWES360.API.Controllers.AuthenticationController (SIWES360.API).
+2026-03-02 12:02:13.979 +01:00 [INF] Handling {"identifier":"200502042","Password":"08098011"} {"identifier":"200502042","Password":"08098011"}
+2026-03-02 12:02:14.121 +01:00 [INF] Executed DbCommand (13ms) [Parameters=[@__identifier_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DepartmentId", a."Email", a."EmailConfirmed", a."FirstName", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."MatricNumber", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RefreshToken", a."RefreshTokenExpiryTime", a."Role", a."SecurityStamp", a."TwoFactorEnabled", a."UpdatedAt", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."MatricNumber" = @__identifier_0
+LIMIT 1
+2026-03-02 12:02:14.314 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DepartmentId", a."Email", a."EmailConfirmed", a."FirstName", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."MatricNumber", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RefreshToken", a."RefreshTokenExpiryTime", a."Role", a."SecurityStamp", a."TwoFactorEnabled", a."UpdatedAt", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."NormalizedUserName" = @__normalizedUserName_0
+LIMIT 1
+2026-03-02 12:02:14.328 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DepartmentId", a."Email", a."EmailConfirmed", a."FirstName", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."MatricNumber", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RefreshToken", a."RefreshTokenExpiryTime", a."Role", a."SecurityStamp", a."TwoFactorEnabled", a."UpdatedAt", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."NormalizedEmail" = @__normalizedEmail_0
+LIMIT 2
+2026-03-02 12:02:14.432 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@p23='?', @p0='?' (DbType = Int32), @p1='?', @p24='?', @p2='?' (DbType = DateTime), @p3='?' (DbType = Guid), @p4='?', @p5='?' (DbType = Boolean), @p6='?', @p7='?', @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?', @p11='?', @p12='?', @p13='?', @p14='?', @p15='?' (DbType = Boolean), @p16='?', @p17='?' (DbType = DateTime), @p18='?' (DbType = Int32), @p19='?', @p20='?' (DbType = Boolean), @p21='?' (DbType = DateTime), @p22='?'], CommandType='"Text"', CommandTimeout='30']
+UPDATE "AspNetUsers" SET "AccessFailedCount" = @p0, "ConcurrencyStamp" = @p1, "CreatedAt" = @p2, "DepartmentId" = @p3, "Email" = @p4, "EmailConfirmed" = @p5, "FirstName" = @p6, "LastName" = @p7, "LockoutEnabled" = @p8, "LockoutEnd" = @p9, "MatricNumber" = @p10, "NormalizedEmail" = @p11, "NormalizedUserName" = @p12, "PasswordHash" = @p13, "PhoneNumber" = @p14, "PhoneNumberConfirmed" = @p15, "RefreshToken" = @p16, "RefreshTokenExpiryTime" = @p17, "Role" = @p18, "SecurityStamp" = @p19, "TwoFactorEnabled" = @p20, "UpdatedAt" = @p21, "UserName" = @p22
+WHERE "Id" = @p23 AND "ConcurrencyStamp" = @p24;
+2026-03-02 12:02:14.469 +01:00 [INF] Handled LoginCommand
+2026-03-02 12:02:14.478 +01:00 [INF] Executing OkObjectResult, writing value of type 'SIWES360.Application.Features.Authentication.TokenResponse'.
+2026-03-02 12:02:14.489 +01:00 [INF] Executed action SIWES360.API.Controllers.AuthenticationController.Login (SIWES360.API) in 547.7707ms
+2026-03-02 12:02:14.499 +01:00 [INF] Executed endpoint 'SIWES360.API.Controllers.AuthenticationController.Login (SIWES360.API)'
+2026-03-02 12:02:14.506 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5229/api/Authentication/login - 200 null application/json; charset=utf-8 750.7107ms
+2026-03-02 12:02:21.559 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5229/api/Authentication/revoke - application/json 0
+2026-03-02 12:02:21.567 +01:00 [INF] Executing endpoint 'SIWES360.API.Controllers.AuthenticationController.Revoke (SIWES360.API)'
+2026-03-02 12:02:21.576 +01:00 [INF] Route matched with {action = "Revoke", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Revoke(System.Threading.CancellationToken) on controller SIWES360.API.Controllers.AuthenticationController (SIWES360.API).
+2026-03-02 12:02:21.582 +01:00 [INF] Handling {} {}
+2026-03-02 12:02:21.590 +01:00 [INF] Handled RevokeTokenCommand
+2026-03-02 12:02:21.593 +01:00 [INF] Executing BadRequestObjectResult, writing value of type 'SIWES360.Application.Common.Models.Error'.
+2026-03-02 12:02:21.604 +01:00 [INF] Executed action SIWES360.API.Controllers.AuthenticationController.Revoke (SIWES360.API) in 24.3354ms
+2026-03-02 12:02:21.607 +01:00 [INF] Executed endpoint 'SIWES360.API.Controllers.AuthenticationController.Revoke (SIWES360.API)'
+2026-03-02 12:02:21.609 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5229/api/Authentication/revoke - 400 null application/json; charset=utf-8 49.3935ms
+2026-03-02 12:02:24.346 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5229/api/Authentication/revoke - application/json 0
+2026-03-02 12:02:24.352 +01:00 [INF] Executing endpoint 'SIWES360.API.Controllers.AuthenticationController.Revoke (SIWES360.API)'
+2026-03-02 12:02:24.354 +01:00 [INF] Route matched with {action = "Revoke", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Revoke(System.Threading.CancellationToken) on controller SIWES360.API.Controllers.AuthenticationController (SIWES360.API).
+2026-03-02 12:02:24.359 +01:00 [INF] Handling {} {}
+2026-03-02 12:02:24.362 +01:00 [INF] Handled RevokeTokenCommand
+2026-03-02 12:02:24.364 +01:00 [INF] Executing BadRequestObjectResult, writing value of type 'SIWES360.Application.Common.Models.Error'.
+2026-03-02 12:02:24.367 +01:00 [INF] Executed action SIWES360.API.Controllers.AuthenticationController.Revoke (SIWES360.API) in 9.4751ms
+2026-03-02 12:02:24.369 +01:00 [INF] Executed endpoint 'SIWES360.API.Controllers.AuthenticationController.Revoke (SIWES360.API)'
+2026-03-02 12:02:24.371 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5229/api/Authentication/revoke - 400 null application/json; charset=utf-8 25.1837ms
+2026-03-02 12:02:41.987 +01:00 [INF] Application is shutting down...
+2026-03-02 13:01:37.759 +01:00 [INF] User profile is available. Using 'C:\Users\user\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-02 13:01:40.108 +01:00 [INF] Executed DbCommand (108ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-02 13:01:40.196 +01:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 13:01:40.363 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-02 13:01:40.482 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-02 13:01:40.494 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 13:01:40.533 +01:00 [INF] No migrations were applied. The database is already up to date.
+2026-03-02 13:01:41.771 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Departments" AS d)
+2026-03-02 13:01:42.174 +01:00 [INF] Now listening on: http://localhost:5229
+2026-03-02 13:01:42.180 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-02 13:01:42.182 +01:00 [INF] Hosting environment: Development
+2026-03-02 13:01:42.194 +01:00 [INF] Content root path: C:\Users\user\Desktop\dev\c##\SIWES360\siwes360.api
+2026-03-02 13:03:09.592 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5229/api/Authentication/login - application/json 57
+2026-03-02 13:03:09.624 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-03-02 13:03:09.671 +01:00 [INF] Executing endpoint 'SIWES360.API.Controllers.AuthenticationController.Login (SIWES360.API)'
+2026-03-02 13:03:09.712 +01:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(SIWES360.Application.Features.Authentication.Commands.LoginUser.LoginCommand, System.Threading.CancellationToken) on controller SIWES360.API.Controllers.AuthenticationController (SIWES360.API).
+2026-03-02 13:03:09.761 +01:00 [INF] Handling {"identifier":"200502042","Password":"08098011"} {"identifier":"200502042","Password":"08098011"}
+2026-03-02 13:03:09.976 +01:00 [INF] Executed DbCommand (17ms) [Parameters=[@__identifier_0='?', @__identifier_0_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DepartmentId", a."Email", a."EmailConfirmed", a."FirstName", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."MatricNumber", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RefreshToken", a."RefreshTokenExpiryTime", a."Role", a."SecurityStamp", a."TwoFactorEnabled", a."UpdatedAt", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."MatricNumber" = @__identifier_0 OR a."Email" = @__identifier_0_1 OR a."UserName" = @__identifier_0_1
+LIMIT 1
+2026-03-02 13:03:10.166 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__deptId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT d."Name"
+FROM "Departments" AS d
+WHERE d."Id" = @__deptId_0
+LIMIT 1
+2026-03-02 13:03:10.189 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedUserName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DepartmentId", a."Email", a."EmailConfirmed", a."FirstName", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."MatricNumber", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RefreshToken", a."RefreshTokenExpiryTime", a."Role", a."SecurityStamp", a."TwoFactorEnabled", a."UpdatedAt", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."NormalizedUserName" = @__normalizedUserName_0
+LIMIT 1
+2026-03-02 13:03:10.209 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DepartmentId", a."Email", a."EmailConfirmed", a."FirstName", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."MatricNumber", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RefreshToken", a."RefreshTokenExpiryTime", a."Role", a."SecurityStamp", a."TwoFactorEnabled", a."UpdatedAt", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."NormalizedEmail" = @__normalizedEmail_0
+LIMIT 2
+2026-03-02 13:03:10.326 +01:00 [INF] Executed DbCommand (16ms) [Parameters=[@p23='?', @p0='?' (DbType = Int32), @p1='?', @p24='?', @p2='?' (DbType = DateTime), @p3='?' (DbType = Guid), @p4='?', @p5='?' (DbType = Boolean), @p6='?', @p7='?', @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?', @p11='?', @p12='?', @p13='?', @p14='?', @p15='?' (DbType = Boolean), @p16='?', @p17='?' (DbType = DateTime), @p18='?' (DbType = Int32), @p19='?', @p20='?' (DbType = Boolean), @p21='?' (DbType = DateTime), @p22='?'], CommandType='"Text"', CommandTimeout='30']
+UPDATE "AspNetUsers" SET "AccessFailedCount" = @p0, "ConcurrencyStamp" = @p1, "CreatedAt" = @p2, "DepartmentId" = @p3, "Email" = @p4, "EmailConfirmed" = @p5, "FirstName" = @p6, "LastName" = @p7, "LockoutEnabled" = @p8, "LockoutEnd" = @p9, "MatricNumber" = @p10, "NormalizedEmail" = @p11, "NormalizedUserName" = @p12, "PasswordHash" = @p13, "PhoneNumber" = @p14, "PhoneNumberConfirmed" = @p15, "RefreshToken" = @p16, "RefreshTokenExpiryTime" = @p17, "Role" = @p18, "SecurityStamp" = @p19, "TwoFactorEnabled" = @p20, "UpdatedAt" = @p21, "UserName" = @p22
+WHERE "Id" = @p23 AND "ConcurrencyStamp" = @p24;
+2026-03-02 13:03:10.366 +01:00 [WRN] Long Running Request: LoginCommand (597 ms)
+2026-03-02 13:03:10.369 +01:00 [INF] Handled LoginCommand
+2026-03-02 13:03:10.376 +01:00 [INF] Executing OkObjectResult, writing value of type 'SIWES360.Application.Features.Authentication.TokenResponse'.
+2026-03-02 13:03:10.391 +01:00 [INF] Executed action SIWES360.API.Controllers.AuthenticationController.Login (SIWES360.API) in 668.6244ms
+2026-03-02 13:03:10.398 +01:00 [INF] Executed endpoint 'SIWES360.API.Controllers.AuthenticationController.Login (SIWES360.API)'
+2026-03-02 13:03:10.405 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5229/api/Authentication/login - 200 null application/json; charset=utf-8 815.3911ms
+2026-03-02 14:46:27.320 +01:00 [INF] Application is shutting down...
