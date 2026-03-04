@@ -48,3 +48,6 @@ Desktop.ini
 # App settings
 appsettings.json
 appsettings.Development.json
+
+# Logs directory
+**/logs/
