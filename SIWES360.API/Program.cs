@@ -22,7 +22,7 @@ builder.Host.UseSerilog((context, services, configuration) =>
 builder.Services.AddOpenApi();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddControllers();  
+builder.Services.AddControllers();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 
@@ -32,21 +32,19 @@ var app = builder.Build();
 await AppDbSeeder.SeedAsync(app.Services);
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+
+app.MapOpenApi();
+
+app.MapScalarApiReference(options =>
 {
-    app.MapOpenApi();
-
-    app.MapScalarApiReference(options =>
- {
-     options
-         .WithTitle("SIWES360 API Docs")
-         .WithTheme(ScalarTheme.Mars);
- });
-
-}
-
+ options
+     .WithTitle("SIWES360 API Docs")
+     .WithTheme(ScalarTheme.Mars);
+});
 app.UseHttpsRedirection();
 
+app.UseRouting();
+app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

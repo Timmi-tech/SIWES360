@@ -28,6 +28,17 @@ namespace SIWES360.Infrastructure
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddHttpContextAccessor();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000", "https://siwes-360.vercel.app")
+                           .AllowAnyMethod()
+                           .AllowAnyHeader()
+                          .AllowCredentials();
+                });
+            });
+
             services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = true;
